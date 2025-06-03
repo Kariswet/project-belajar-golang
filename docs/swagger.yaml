@@ -1,0 +1,201 @@
+definitions:
+  model.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  model.MainModelFill:
+    properties:
+      data_1:
+        type: string
+      data_2:
+        type: string
+      data_3:
+        type: string
+      data_4:
+        type: string
+    type: object
+  model.MetadataResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  model.UserFill:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:7391
+info:
+  contact: {}
+  description: This is a sample server
+  title: Example API
+  version: "1.0"
+paths:
+  /admin/delete-model/{id}:
+    delete:
+      description: Hit to delete record
+      parameters:
+      - description: Main Model Input
+        in: path
+        name: id
+        required: true
+        type: string
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Delete Main Model
+      tags:
+      - Admin
+  /admin/get-by-id-model/{id}:
+    post:
+      description: Hit to get record
+      parameters:
+      - description: Main Modep Input
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Get Main Model by ID
+      tags:
+      - Admin
+  /admin/get-model:
+    get:
+      description: Hit to get record
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Get All Main Model
+      tags:
+      - Admin
+  /admin/post-model:
+    post:
+      consumes:
+      - application/json
+      description: Accepts JSON and creates a new record
+      parameters:
+      - description: Main Modep Input
+        in: body
+        name: MainModel
+        required: true
+        schema:
+          $ref: '#/definitions/model.MainModelFill'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Create a new Main Model
+      tags:
+      - Admin
+  /admin/put-model/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Accepts JSON and update a record
+      parameters:
+      - description: Record ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Main Modep Input
+        in: body
+        name: MainModel
+        required: true
+        schema:
+          $ref: '#/definitions/model.MainModelFill'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Update a Main Model
+      tags:
+      - Admin
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates user and returns JWT token
+      parameters:
+      - description: Login Payload
+        in: body
+        name: LoginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MetadataResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.MetadataResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.MetadataResponse'
+      summary: Login user
+      tags:
+      - Auth
+  /user/delete-model/{id}:
+    delete:
+      description: Hit to delete record
+      parameters:
+      - description: Main Model Input
+        in: path
+        name: id
+        required: true
+        type: string
+      responses: {}
+      summary: Delete User
+      tags:
+      - User
+  /user/post-model:
+    post:
+      consumes:
+      - application/json
+      description: Accepts JSON and creates a new record
+      parameters:
+      - description: User Input
+        in: body
+        name: Input
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserFill'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new User
+      tags:
+      - User
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
